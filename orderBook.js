@@ -31,12 +31,18 @@ const reconcileOrder = (existingBook, incomingOrder) => {
 
 const orderType = (existingBook, incomingOrder) => {
   if (existingBook.type !== incomingOrder.type) {
-    
+    return true
+  } else {
+    return false
   }
 }
 
 const orderPrice = (existingBook, incomingOrder) => {
-  
+  if (existingBook.price === incomingOrder.price) {
+    return true
+  } else {
+    return false
+  }
 }
 
 const findQuantity = (existingBook, incomingOrder) => {
