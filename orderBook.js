@@ -30,7 +30,9 @@ const reconcileOrder = (existingBook, incomingOrder) => {
 }
 
 const orderType = (existingBook, incomingOrder) => {
-
+  if (existingBook.type !== incomingOrder.type) {
+    
+  }
 }
 
 const orderPrice = (existingBook, incomingOrder) => {
