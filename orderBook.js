@@ -7,26 +7,28 @@ const reconcileOrder = (existingBook, incomingOrder) => {
     return updatedBook
   }
 
-  existingBook.array.forEach((curOrder, index) => {
-    if (orderType(existingBook, incomingOrder) && orderPrice(existingBook, incomingOrder)) {
-      const quantity = findQuantityAmount(existingBook, incomingOrder)
+  existingBook.forEach((currentOrder, index) => {
+    if (orderType(currentOrder, incomingOrder) && orderPrice(currentOrder, incomingOrder)) {
+      const quantity = findQuantityAmount(currentOrder, incomingOrder)
 
-      existingBook.quantity -= quantity
+      currentOrder.quantity -= quantity
       incomingOrder.quantity -= quantity
     }
 
-    if (existingBook.quantity > 0) {
-      updatedBook.push(existingBook)
+    if (currentOrder.quantity > 0) {
+      updatedBook.push(currentOrder)
     }
 
     existingBook.splice(index, 1)
-  });
+  })
+
+  let returnOrder = existingBook.concat(updatedBook)
 
   if (incomingOrder.quantity > 0) {
-    updatedBook.push(incomingOrder)
+    returnOrder.push(incomingOrder)
   }
 
-  return updatedBook
+  return returnOrder
 }
 
 const orderType = (existingBook, incomingOrder) => {
