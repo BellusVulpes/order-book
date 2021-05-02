@@ -9,7 +9,7 @@ const reconcileOrder = (existingBook, incomingOrder) => {
 
   existingBook.array.forEach((curOrder, index) => {
     if (orderType(existingBook, incomingOrder) && orderPrice(existingBook, incomingOrder)) {
-      const quantity = findQuantity(existingBook, incomingOrder)
+      const quantity = findQuantityAmount(existingBook, incomingOrder)
 
       existingBook.quantity -= quantity
       incomingOrder.quantity -= quantity
@@ -45,8 +45,10 @@ const orderPrice = (existingBook, incomingOrder) => {
   }
 }
 
-const findQuantity = (existingBook, incomingOrder) => {
-  
+const findQuantityAmount = (existingBook, incomingOrder) => {
+  const quantityAmount = Math.min(existingBook.quantity, incomingOrder.quantity)
+
+  return quantityAmount
 }
 
 module.exports = reconcileOrder
