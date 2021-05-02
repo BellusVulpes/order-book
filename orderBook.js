@@ -29,4 +29,16 @@ const reconcileOrder = (existingBook, incomingOrder) => {
   return updatedBook
 }
 
+const orderType = (existingBook, incomingOrder) => {
+
+}
+
+const orderPrice = (existingBook, incomingOrder) => {
+  
+}
+
+const findQuantity = (existingBook, incomingOrder) => {
+  
+}
+
 module.exports = reconcileOrder
