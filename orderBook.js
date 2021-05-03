@@ -7,28 +7,24 @@ const reconcileOrder = (existingBook, incomingOrder) => {
     return updatedBook
   }
 
-  existingBook.forEach((currentOrder, index) => {
+  while (existingBook.length) {
+    let currentOrder = existingBook.shift()
+
     if (orderType(currentOrder, incomingOrder) && orderPrice(currentOrder, incomingOrder)) {
-      const quantity = findQuantityAmount(currentOrder, incomingOrder)
-
-      currentOrder.quantity -= quantity
-      incomingOrder.quantity -= quantity
+      incomingOrder = fulfillOrder(currentOrder, incomingOrder)
     }
 
-    if (currentOrder.quantity > 0) {
+    else {
       updatedBook.push(currentOrder)
-    }
+    } }
 
-    existingBook.splice(index, 1)
-  })
-
-  let returnOrder = existingBook.concat(updatedBook)
+  updatedBook = updatedBook.concat(existingBook)
 
   if (incomingOrder.quantity > 0) {
-    returnOrder.push(incomingOrder)
+    updatedBook.push(incomingOrder)
   }
 
-  return returnOrder
+  return updatedBook
 }
 
 const orderType = (existingBook, incomingOrder) => {
@@ -47,10 +43,12 @@ const orderPrice = (existingBook, incomingOrder) => {
   }
 }
 
-const findQuantityAmount = (existingBook, incomingOrder) => {
-  const quantityAmount = Math.min(existingBook.quantity, incomingOrder.quantity)
-
-  return quantityAmount
+const fulfillOrder = (currentOrder, incomingOrder) => {
+  if (incomingOrder.quantity >= currentOrder.quantity) {
+    return { ...incomingOrder, quantity: incomingOrder.quantity - currentOrder.quantity }
+  } else {
+    return { ...currentOrder, quantity: currentOrder.quantity - incomingOrder.quantity }
+  }
 }
 
 module.exports = reconcileOrder
